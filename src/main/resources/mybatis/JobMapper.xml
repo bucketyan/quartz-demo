@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bsi.bdc.quartzdemo.dao.JobDao">
+
+    <sql id="baseColumnSql">
+        id, class_name as className, cron_expression as cronExpression, job_name as jobName, job_group as jobGroup,
+        trigger_name as triggerName, trigger_group as triggerGroup, pause, enable, description,
+        create_time as createTime, update_time as updateTime
+    </sql>
+
+    <select id="select" resultType="com.bsi.bdc.quartzdemo.pojo.ScheduleJob">
+        SELECT
+        <include refid="baseColumnSql"/>
+        FROM schedule_job
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAllJob" resultType="com.bsi.bdc.quartzdemo.pojo.ScheduleJob">
+        SELECT
+        <include refid="baseColumnSql"/>
+        FROM schedule_job
+    </select>
+
+    <select id="getAllEnableJob" resultType="com.bsi.bdc.quartzdemo.pojo.ScheduleJob">
+        SELECT
+        <include refid="baseColumnSql"/>
+        FROM schedule_job
+        WHERE enable = TRUE
+    </select>
+
+    <update id="update" parameterType="com.bsi.bdc.quartzdemo.pojo.ScheduleJob" flushCache="true">
+        UPDATE schedule_job
+        <set>
+            <if test="className != null ">
+                class_name = #{className},
+            </if>
+            <if test="cronExpression != null ">
+                cron_expression = #{cronExpression},
+            </if>
+            <if test="jobName != null ">
+                job_name = #{jobName},
+            </if>
+            <if test="jobGroup != null ">
+                job_group = #{jobGroup},
+            </if>
+            <if test="triggerName != null ">
+                trigger_name = #{triggerName},
+            </if>
+            <if test="triggerGroup != null ">
+                trigger_group = #{triggerGroup},
+            </if>
+            <if test="pause != null ">
+                pause = #{pause},
+            </if>
+            <if test="enable != null ">
+                enable = #{enable},
+            </if>
+            <if test="description != null ">
+                description = #{description},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM schedule_job WHERE id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.bsi.bdc.quartzdemo.pojo.ScheduleJob" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO schedule_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="className != null ">
+                class_name,
+            </if>
+            <if test="cronExpression != null ">
+                cron_expression,
+            </if>
+            <if test="jobName != null ">
+                job_name,
+            </if>
+            <if test="jobGroup != null ">
+                job_group,
+            </if>
+            <if test="triggerName != null ">
+                trigger_name,
+            </if>
+            <if test="triggerGroup != null ">
+                trigger_group,
+            </if>
+            <if test="pause != null ">
+                pause,
+            </if>
+            <if test="enable != null ">
+                enable,
+            </if>
+            <if test="description != null ">
+                description,
+            </if>
+        </trim>
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="className != null ">
+                #{className},
+            </if>
+            <if test="cronExpression != null ">
+                #{cronExpression},
+            </if>
+            <if test="jobName != null ">
+                #{jobName},
+            </if>
+            <if test="jobGroup != null ">
+                #{jobGroup},
+            </if>
+            <if test="triggerName != null ">
+                #{triggerName},
+            </if>
+            <if test="triggerGroup != null ">
+                #{triggerGroup},
+            </if>
+            <if test="pause != null ">
+                #{pause},
+            </if>
+            <if test="enable != null ">
+                #{enable},
+            </if>
+            <if test="description != null ">
+                #{description},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: quartz-demo
+  profiles:
+    active: t
+  banner:
+    charset: utf-8
+    location: banner.txt
+  output:
+    ansi:
+      #DETECT：会检查终端是否支持ANSI，是的话就采用彩色输出（推荐项）
+      enabled: detect
+
+management:
+  server:
+    address: 127.0.0.1
+    #actuator暴露接口使用的端口，为了和api接口使用的端口进行分离
+    #port: 9087
+    servlet:
+      #actuator暴露接口的前缀
+      context-path: /manage
+  endpoint:
+    shutdown:
+      #actuator的shutdown接口开启
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        #默认只公开了/health和/info端点，要想暴露所有端点只需设置成星号即可
+        include: "*"
+      #默认值为：/actuator  若不配置则变为/manage/actuator/shutdown 配置/ 维持原有/manage/shutdown
+      base-path: /
+
+logging:
+  config: classpath:log4j2.xml
+
+
+
+
+
